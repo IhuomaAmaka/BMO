@@ -1,0 +1,25 @@
+controller:
+  ingressClass: ${ingress_class}
+  config:
+    server-tokens: false
+    use-proxy-protocol: false
+    compute-full-forwarded-for: true
+    use-forwarded-headers: true
+  autoscaling:
+    enabled: ${enable_autoscaling}
+    minReplicas: ${min_replicas}
+    maxReplicas: ${max_replicas}
+  ingressClassResource:
+    name: ${ingress_class}
+#extraArgs:
+#default-ssl-certificate: "argocd/server-tls"
+#enable-ss1-passthrough: “"
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-name: ${1b_name}
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout:'60'
+      service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
+      service.beta.kubernetes.io/aws-load-balancer-internal: 'true'
+      service.beta.kubernetes.io/aws-load-balancer-subnets: ${1b_subnets}
